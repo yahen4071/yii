@@ -4,10 +4,14 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use yii\widgets\LinkPager;
+use yii\grid\CheckboxColumn;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\SupplierSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $checkboxColumn yii\grid\CheckboxColumn */
+
 
 $this->title = 'Suppliers';
 $this->params['breadcrumbs'][] = $this->title;
@@ -26,27 +30,27 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'showFooter' => true,//是否显示表格尾部
         'headerRowOptions' => ['class'=>'abc'],//排序行的属性
-        'layout'=> '{items} '."\n".' {summary}'."\n".' <div class="text-right tooltip-demo"> {pager} </div>',
-        'pager' => [
-        /* 默认不显示的按钮设置 */
-        'firstPageLabel' => '首页',
-        'prevPageLabel' => '上一页',
-        'nextPageLabel' => '下一页',
-        'lastPageLabel' => '尾页'
-         ],
+        'pager' => [//自定义分页样式以及显示内容
+            'prevPageLabel'=>'上一页',
+            'nextPageLabel'=>'下一页',
+            'firstPageLabel' => '第一页',
+            'lastPageLabel' => '最后一页',
+        ],
         'columns' => [
             [
-                'class' => 'yii\grid\CheckboxColumn',  //复选框
-                'footer' => '<a class="btn btn-danger" onclick=rankedexport("/basic/web/?r=supplier/export")>导出选中数据</a>'//设置该列底部内容
+                'class' => CheckboxColumn::className(),  //复选框
+                'footer' => '<a class="btn btn-danger" onclick=rankedexport("/basic/web/?r=supplier/export")>导出选中数据</a>',//设置该列底部内容
+               //'footerOptions' => ['colspan' => 5,'class'=>'hide'],
             ],
-            'id',
-            'name',
-            'code',
-            't_status',
+            ['attribute' => 'id', 'footerOptions' => ['class'=>'hide']],
+            ['attribute' => 'name', 'footerOptions' => ['class'=>'hide']],
+            ['attribute' => 'code', 'footerOptions' => ['class'=>'hide']],
+            ['attribute' => 't_status', 'footerOptions' => ['class'=>'hide']],
         ],
+        'layout'=> '{items} '."\n".' {summary}'."\n".' {pager}',
     ]);
- ?>
 
+    ?>
     <script>
         //导出记录
         function downloadFile(data,name){

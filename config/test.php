@@ -20,6 +20,18 @@ return [
         ],
         'assetManager' => [
             'basePath' => __DIR__ . '/../web/assets',
+            'linkAssets' => true,
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'js' => [YII_DEBUG ? 'jquery.js' : 'jquery.min.js'],
+                ],
+                'yii\bootstrap\BootstrapAsset' => [
+                    'css' => [YII_DEBUG ? 'css/bootstrap.css' : 'css/bootstrap.min.css'],
+                ],
+                'yii\bootstrap\BootstrapPluginAsset' => [
+                    'js' => [YII_DEBUG ? 'js/bootstrap.js' : 'js/bootstrap.min.js'],
+                ],
+            ],
         ],
 //        'urlManager' => [
 //            'showScriptName' => true,

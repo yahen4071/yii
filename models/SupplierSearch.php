@@ -50,6 +50,7 @@ class SupplierSearch extends Supplier
                 'pageSize' => 5,
             ],
         ]);
+        print_r($dataProvider->pagination);
 
         $this->load($params);
 
