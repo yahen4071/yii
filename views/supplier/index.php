@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'showFooter' => true,//是否显示表格尾部
         'headerRowOptions' => ['class'=>'abc'],//排序行的属性
         'pager' => [//自定义分页样式以及显示内容
+            'class' => '\yii\bootstrap4\LinkPager',
             'prevPageLabel'=>'上一页',
             'nextPageLabel'=>'下一页',
             'firstPageLabel' => '第一页',
