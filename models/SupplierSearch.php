@@ -47,10 +47,10 @@ class SupplierSearch extends Supplier
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 5,
+                'pageSize' => 8,
             ],
         ]);
-        print_r($dataProvider->pagination);
+
 
         $this->load($params);
 
@@ -59,7 +59,7 @@ class SupplierSearch extends Supplier
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        print_r($dataProvider->pagination);
         // grid filtering conditions
         $query->andFilterWhere([ 'id' => $this->id])->andFilterWhere([ 't_status' => $this->t_status]);
 

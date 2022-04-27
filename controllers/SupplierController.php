@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Supplier;
 use app\models\SupplierSearch;
+use yii\base\Model;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -61,7 +62,44 @@ class SupplierController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
+    /**
+     * Displays a single Supplier model.
+     * @return string
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionExport()
+    {
+        $model = new Supplier();
+        if ($this->request->isPost) {
+            $fields =\Yii::$app->request->post('Supplier');
+            $efields=['id', 'name', 'code', 't_status'];
+            $labels= $model->attributeLabels();
+            if (is_array($fields["field"])){
+               $field=implode(",",$fields["field"]);
+               $efields=$fields["field"];
+               foreach ($efields as $k=>$v){
+                   $header[$k]=$labels[$v];
+               }
+            }else{
+                $field="*";
+                $header= ['Id', '姓名', '编码', '状态'];
+            }
+            $sql = "SELECT " . $field . " FROM supplier";
+            theCsv::export([
+                'reader' => \Yii::$app->getDb()->createCommand($sql)->query(),
+                'fields' => $efields,
+                'header' => $header,
+                "name"=>"厂商_".date("YmdHis").".csv",
+            ]);
+            return ;
+        }else{
 
+            $model->loadDefaultValues();
+            return $this->render('export', [
+                'model' =>$model,
+            ]);
+        }
+    }
     /**
      * Creates a new Supplier model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -138,10 +176,11 @@ class SupplierController extends Controller
      * @param string $ids
      * @return  Csv
      */
-    public function actionExport()
+    public function actionExpdata()
     {
-       $ids =\Yii::$app->request->post('ids');
-         $sql="SELECT * FROM supplier where id in (".$ids.")";
+        $field =\Yii::$app->request->post('field');
+       // $filed=implode($fields,",");
+         $sql="SELECT ".$field." FROM supplier";
         theCsv::export([
             'reader' => \Yii::$app->getDb()->createCommand($sql)->query(),
             'fields' => ['id', 'name','code','t_status'],

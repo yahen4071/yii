@@ -14,6 +14,7 @@ use Yii;
  */
 class Supplier extends \yii\db\ActiveRecord
 {
+    public $field;
     /**
      * {@inheritdoc}
      */
@@ -32,19 +33,32 @@ class Supplier extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 50],
             [['code'], 'string', 'max' => 3],
             [['code'], 'unique'],
+            [['field'], 'safe']
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public  function attributeLabels()
     {
         return [
             'id' => 'ID',
             'name' => '名称',
             'code' => '编码',
             't_status' => '状态',
+        ];
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public  function attributeLabelMap()
+    {
+        return [
+            ['key'=>"id","val"=>"Id"],
+            ['key'=>"name","val"=>"名称"],
+            ['key'=>"code","val"=>"编码"],
+            ['key'=>"t_status","val"=>"状态"],
         ];
     }
 
