@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'showFooter' => false,//是否显示表格尾部
         'headerRowOptions' => ['class'=>'abc'],//排序行的属性
-        'pager' => [
+        'pager' => [//自定义分页样式以及显示内容
             'class' => '\yii\bootstrap4\LinkPager',
             'prevPageLabel'=>'上一页',
             'nextPageLabel'=>'下一页',
